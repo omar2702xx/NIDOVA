@@ -1,0 +1,4 @@
+# Skill folders that are junctions to .agents/skills (recreate locally)
+.aider-desk/skills/
+.claude/skills/*
+!.claude/skills/matt-code-review/
