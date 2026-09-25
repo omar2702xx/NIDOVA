@@ -123,6 +123,7 @@ CREATE TABLE lectura_estacion (
   medido_en          DATETIME      NOT NULL,
   recibido_en        DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
   temp_ambiental_c   DECIMAL(5,2)  NULL,
+  humedad_ambiental_pct DECIMAL(5,2) NULL,     -- humedad relativa del aire
   radiacion_uv       DECIMAL(5,2)  NULL,        -- índice UV
   CONSTRAINT uq_lectura_estacion UNIQUE (estacion_id, medido_en),
   CONSTRAINT fk_lectura_estacion_estacion

@@ -72,6 +72,7 @@ erDiagram
         int estacion_id FK
         datetime medido_en
         decimal temp_ambiental_c
+        decimal humedad_ambiental_pct
         decimal radiacion_uv
     }
     PULSO {
@@ -104,7 +105,7 @@ erDiagram
 | `experimento` | Periodo de prueba con su configuración fija. |
 | `experimento_nido` | Rol (control o tratado) de cada nido en cada experimento. |
 | `lectura_nido` | Mediciones de arena de un nido cada 30 s. |
-| `lectura_estacion` | Mediciones ambientales de una estación cada 30 s. |
+| `lectura_estacion` | Mediciones ambientales de una estación cada 30 s (temperatura, humedad del aire y UV). |
 | `pulso` | Cada activación de la microaspersión. |
 | `prediccion_riesgo` | Resultados del modelo de IA. |
 
@@ -194,6 +195,7 @@ Abreviaturas: **PK** llave primaria, **FK** llave foránea, **UK** valor único,
 | medido_en | DATETIME | No | UK (con estacion_id) | Hora del ESP32. |
 | recibido_en | DATETIME | No | | Hora de llegada al servidor. |
 | temp_ambiental_c | DECIMAL(5,2) | Sí | | Temperatura ambiental en °C. |
+| humedad_ambiental_pct | DECIMAL(5,2) | Sí | | Humedad relativa del aire en %. |
 | radiacion_uv | DECIMAL(5,2) | Sí | | Índice UV. |
 
 ### pulso

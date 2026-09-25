@@ -46,11 +46,15 @@ _Avoid_: Temperatura de arena (para referirse a esta)
 
 **Humedad de arena**:
 Contenido de humedad de la arena del nido; permite comprobar que la microaspersión realmente mojó el nido.
-_Avoid_: Humedad (a secas), humedad relativa
+_Avoid_: Humedad (a secas), humedad del suelo
 
 **Temperatura ambiental**:
 Temperatura del aire en la estación; es la misma para todos sus nidos.
 _Avoid_: Temperatura exterior, clima
+
+**Humedad ambiental**:
+Humedad relativa del aire en la estación; es la misma para todos sus nidos.
+_Avoid_: Humedad (a secas), humedad del aire
 
 **Radiación UV**:
 Intensidad de radiación ultravioleta que recibe la estación; es la misma para todos sus nidos.
@@ -61,7 +65,7 @@ Medición de la temperatura de arena, la temperatura superficial y la humedad de
 _Avoid_: Registro, dato, muestra
 
 **Lectura de estación**:
-Medición de la temperatura ambiental y la radiación UV de una estación en un instante, con la hora del microcontrolador.
+Medición de la temperatura ambiental, la humedad ambiental y la radiación UV de una estación en un instante, con la hora del microcontrolador.
 _Avoid_: Lectura ambiental, registro, dato
 
 ### Riesgo térmico
