@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ArbolExpresiones {
@@ -29,10 +31,10 @@ public class ArbolExpresiones {
                 if (texto.charAt(pos) == ')') error("Sobra un parentesis ')'");
                 error("Signo no valido '" + texto.charAt(pos) + "'");
             }
-            double resultado = resolver(raiz);
-            System.out.println("\nArbol resuelto:\n");
-            imprimir(raiz, "");
-            System.out.println("\nResultado = " + formato(resultado));
+            List<String> lineas = new ArrayList<>();
+            dibujar(raiz, lineas);
+            System.out.println("\nArbol de expresion:\n");
+            for (String linea : lineas) System.out.println(linea);
         } catch (RuntimeException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
@@ -97,38 +99,43 @@ public class ArbolExpresiones {
         throw new RuntimeException(mensaje);
     }
 
-    // ---------- Resolver ----------
-
-    static double resolver(Nodo n) {
-        if (n.izq == null) return Double.parseDouble(n.dato);
-        double a = resolver(n.izq);
-        double b = resolver(n.der);
-        switch (n.dato) {
-            case "+": return a + b;
-            case "-": return a - b;
-            case "*": return a * b;
-            case "/":
-                if (b == 0) error("Division entre cero");
-                return a / b;
-            default:  return Math.pow(a, b);
-        }
-    }
-
     // ---------- Imprimir el arbol ----------
 
-    static void imprimir(Nodo n, String sangria) {
+    // Dibuja el arbol en una lista de lineas y devuelve la columna donde quedo su raiz
+    static int dibujar(Nodo n, List<String> lineas) {
         if (n.izq == null) {
-            System.out.println(n.dato);
-        } else {
-            System.out.println(n.dato + "  = " + formato(resolver(n)));
-            System.out.print(sangria + "|-- ");
-            imprimir(n.izq, sangria + "|   ");
-            System.out.print(sangria + "|-- ");
-            imprimir(n.der, sangria + "    ");
+            lineas.add(n.dato);
+            return n.dato.length() / 2;
         }
+
+        List<String> izq = new ArrayList<>();
+        List<String> der = new ArrayList<>();
+        int colIzq = dibujar(n.izq, izq);
+        int colDer = dibujar(n.der, der);
+
+        int inicioDer = ancho(izq) + 3;   // el subarbol derecho va 3 espacios despues del izquierdo
+        colDer += inicioDer;
+        int centro = (colIzq + colDer) / 2;
+
+        lineas.add(espacios(centro) + n.dato);
+        lineas.add(espacios(colIzq + 1) + "_".repeat(centro - colIzq - 1) + "|" + "_".repeat(colDer - centro - 1));
+        lineas.add(espacios(colIzq) + "|" + espacios(colDer - colIzq - 1) + "|");
+
+        for (int i = 0; i < Math.max(izq.size(), der.size()); i++) {
+            String linea = i < izq.size() ? izq.get(i) : "";
+            if (i < der.size()) linea += espacios(inicioDer - linea.length()) + der.get(i);
+            lineas.add(linea);
+        }
+        return centro;
     }
 
-    static String formato(double v) {
-        return v == (long) v ? String.valueOf((long) v) : String.valueOf(v);
+    static int ancho(List<String> lineas) {
+        int max = 0;
+        for (String l : lineas) max = Math.max(max, l.length());
+        return max;
+    }
+
+    static String espacios(int n) {
+        return " ".repeat(Math.max(0, n));
     }
 }
